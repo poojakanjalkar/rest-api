@@ -1,16 +1,16 @@
 const bcrypt=require("bcrypt");
 const jwt=require("jsonwebtoken");
-const user=require("../models/user.model");
+const User=require("../models/user.model");
 
 async function register(username,password){
-  const existingUser=await user.findOne({username});
+  const existingUser=await User.findOne({username});
   if(existingUser){
     throw new Error("Username already taken");
   }
     // hash password
     const hashedPassword=await bcrypt.hash(password,10);
 
-    const user=new user({
+    const user=new User({
       username,
       password:hashedPassword,
     })
